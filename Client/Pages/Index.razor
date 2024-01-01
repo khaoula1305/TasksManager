@@ -1,0 +1,144 @@
+@page "/"
+
+@attribute [Authorize]
+@inject IJSRuntime JSRuntime
+@inject NavigationManager NavigationManager
+@inject DialogService DialogService
+@inject ContextMenuService ContextMenuService
+@inject TooltipService TooltipService
+@inject NotificationService NotificationService
+@using System.Globalization
+
+<PageTitle>Index</PageTitle>
+<RadzenRow Gap="5" RowGap="5">
+    <RadzenColumn Size="12">
+        <RadzenText Text="Welcome to your managing tasks app" TextStyle="Radzen.Blazor.TextStyle.DisplayH2" TagName="Radzen.Blazor.TagName.Auto" Style="font-family: Georgia" TextAlign="Radzen.TextAlign.Center"></RadzenText>
+        <RadzenText Text="Your Success Is Our Biggest Priority" TextStyle="Radzen.Blazor.TextStyle.H4" TagName="Radzen.Blazor.TagName.H2" class="mt-5"></RadzenText>
+        <RadzenCard Style="margin-top: 40px; padding:40px;">
+            <RadzenRow JustifyContent= "JustifyContent.Center">
+                          <RadzenColumn >
+                <RadzenChart>
+                <RadzenPieSeries Fills="@(new [] { "#0b3787", "#f3ad08", "#a0b1c0", "#0b3787" })" Data="@revenue" Title="Revenue" CategoryProperty="Quarter" ValueProperty="Revenue">
+                </RadzenPieSeries>
+            </RadzenChart>
+             </RadzenColumn>
+               <RadzenColumn  Size="7">
+                <RadzenChart>
+        <RadzenAreaSeries Smooth="true"  Fill ="#0b3787" Data="@revenue2019" CategoryProperty="Date" Title="2019" ValueProperty="Revenue" RenderingOrder="1">
+        </RadzenAreaSeries>
+        <RadzenAreaSeries Smooth="true" Fill ="#f3ad08"  Data="@revenue2020" CategoryProperty="Date" Title="2020" LineType="LineType.Dashed" ValueProperty="Revenue">
+        </RadzenAreaSeries>
+        <RadzenCategoryAxis Padding="20" Formatter="@FormatAsMonth" />
+        <RadzenValueAxis Formatter="@FormatAsUSD">
+            <RadzenAxisTitle Text="Completed Tasks" />
+        </RadzenValueAxis>
+
+    </RadzenChart>
+     </RadzenColumn>
+            </RadzenRow>
+        </RadzenCard>
+    </RadzenColumn>
+</RadzenRow>
+
+@code {
+     class DataItem
+    {
+        public string Quarter { get; set; }
+        public double Revenue { get; set; }
+        public string Date { get; set; }
+    }
+
+    DataItem[] revenue = new DataItem[] {
+        new DataItem
+        {
+            Quarter = "Completed Tasks",
+            Revenue = 30000
+        },
+        new DataItem
+        {
+            Quarter = "Current Tasks",
+            Revenue = 40000
+        },
+        new DataItem
+        {
+            Quarter = "Blocked Tasks",
+            Revenue = 80000
+        },
+    };
+
+    string FormatAsUSD(object value)
+    {
+        return ((double)value).ToString("C0", CultureInfo.CreateSpecificCulture("en-US"));
+    }
+
+    string FormatAsMonth(object value)
+    {
+        if (value != null)
+        {
+            var month =  Convert.ToDateTime(value).ToString("MM");
+            if(Convert.ToInt32(month)%3 ==0)
+            {
+                return Convert.ToDateTime(value).ToString("MMM");
+            }
+        }
+
+        return string.Empty;
+    }
+
+    DataItem[] revenue2019 = new DataItem[] {
+        new DataItem
+        {
+            Date = ("2019-01-01"),
+            Revenue = 234000
+        },
+        new DataItem
+        {
+            Date = ("2019-03-01"),
+            Revenue = 233000
+        },
+        new DataItem
+        {
+            Date = ("2019-06-01"),
+            Revenue = 253000
+        },
+        new DataItem
+        {
+            Date = ("2019-09-01"),
+            Revenue = 273000
+        },
+        new DataItem
+        {
+            Date = ("2019-12-01"),
+            Revenue = 294000
+        }
+    };
+
+    DataItem[] revenue2020 = new DataItem[] {
+        new DataItem
+        {
+            Date = ("2019-01-01"),
+            Revenue = 334000
+        },
+        new DataItem
+        {
+            Date = ("2019-03-01"),
+            Revenue = 333000
+        },
+        new DataItem
+        {
+            Date = ("2019-06-01"),
+            Revenue = 353000
+        },
+        new DataItem
+        {
+            Date = ("2019-09-01"),
+            Revenue = 373000
+        },
+        new DataItem
+        {
+            Date = ("2019-12-01"),
+            Revenue = 394000
+        }
+    };
+}
+

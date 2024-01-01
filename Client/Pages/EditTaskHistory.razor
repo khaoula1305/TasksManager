@@ -1,0 +1,59 @@
+@page "/edit-task-history"
+@attribute [Authorize]
+
+<PageTitle>Edit TaskHistory</PageTitle>
+
+    <RadzenColumn SizeMD=12>
+        <RadzenAlert Shade="Shade.Lighter" Variant="Variant.Flat" Size="AlertSize.Small" AlertStyle="AlertStyle.Danger" Visible="@errorVisible">Cannot save TaskHistory</RadzenAlert>
+        <RadzenTemplateForm TItem="TaskManager.Server.Models.TaskManagerDb.TaskHistory" Data="@taskHistory" Visible="@(taskHistory != null)" Submit="@FormSubmit">
+            <RadzenRow style="margin-bottom: 1rem">
+                <RadzenColumn SizeMD="3">
+                    <RadzenLabel Text="Action1" Component="Action1" style="width: 100%" />
+                </RadzenColumn>
+                <RadzenColumn SizeMD="9">
+                    <RadzenTextBox style="display: block; width: 100%" @bind-Value="@taskHistory.Action1" Name="Action1" />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow style="margin-bottom: 1rem">
+                <RadzenColumn SizeMD="3">
+                    <RadzenLabel Text="Timestamp" Component="Timestamp" style="width: 100%" />
+                </RadzenColumn>
+                <RadzenColumn SizeMD="9">
+                    <RadzenDatePicker DateFormat="MM/dd/yyyy" style="display: block; width: 100%" @bind-Value="@taskHistory.Timestamp" Name="Timestamp" />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow style="margin-bottom: 1rem">
+                <RadzenColumn SizeMD="3">
+                    <RadzenLabel Text="Description Of Change" Component="DescriptionOfChange" style="width: 100%" />
+                </RadzenColumn>
+                <RadzenColumn SizeMD="9">
+                    <RadzenTextBox style="display: block; width: 100%" @bind-Value="@taskHistory.DescriptionOfChange" Name="DescriptionOfChange" />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow style="margin-bottom: 1rem">
+                <RadzenColumn SizeMD="3">
+                    <RadzenLabel Text="Task" Component="Task" style="width: 100%" />
+                </RadzenColumn>
+                <RadzenColumn SizeMD="9">
+                    <RadzenDropDownDataGrid Data="@tasksForTaskID" TextProperty="Title" ValueProperty="TaskID" AllowClear=true
+                         Placeholder="Choose Task" style="display: block; width: 100%" @bind-Value="@taskHistory.TaskID" Name="TaskID"
+                        SelectedValue=@tasksForTaskIDValue Count=@tasksForTaskIDCount LoadData=@tasksForTaskIDLoadData />
+                </RadzenColumn>
+            </RadzenRow>
+            <RadzenRow style="margin-bottom: 1rem">
+                <RadzenColumn SizeMD="3">
+                    <RadzenLabel Text="User" Component="User" style="width: 100%" />
+                </RadzenColumn>
+                <RadzenColumn SizeMD="9">
+                    <RadzenDropDownDataGrid Data="@usersForUserID" TextProperty="Username" ValueProperty="UserID" AllowClear=true
+                         Placeholder="Choose User" style="display: block; width: 100%" @bind-Value="@taskHistory.UserID" Name="UserID"
+                        SelectedValue=@usersForUserIDValue Count=@usersForUserIDCount LoadData=@usersForUserIDLoadData />
+                </RadzenColumn>
+            </RadzenRow>
+          <RadzenStack  Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                    <RadzenButton ButtonStyle="ButtonStyle.Primary" ButtonType="ButtonType.Submit" Icon="save" Text="Save" Variant="Variant.Flat" />
+                    <RadzenButton ButtonStyle="ButtonStyle.Light" Text="Cancel" Variant="Variant.Flat" Click="@CancelButtonClick"  />
+          </RadzenStack>
+        </RadzenTemplateForm>
+    </RadzenColumn>
+

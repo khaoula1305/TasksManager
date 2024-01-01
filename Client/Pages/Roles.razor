@@ -1,0 +1,51 @@
+@page "/roles"
+
+@attribute [Authorize]
+
+<PageTitle>Roles</PageTitle>
+<RadzenStack>
+    <RadzenRow AlignItems="AlignItems.Center">
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenText Text="Roles" TextStyle="TextStyle.H3" TagName="TagName.H1" style="margin: 0" />
+        </RadzenColumn>
+        <RadzenColumn Size="12" SizeMD="6">
+            <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center" JustifyContent="JustifyContent.End" Gap="0.5rem">
+                <RadzenSplitButton Icon="get_app" Text="Export" Click="@ExportClick" Variant="Radzen.Variant.Filled"  ButtonStyle="Radzen.ButtonStyle.Light" Shade="Radzen.Shade.Darker">
+                    <RadzenSplitButtonItem Text="Excel" Value="xlsx" />
+                    <RadzenSplitButtonItem Text="CSV" Value="csv" />
+                </RadzenSplitButton>
+                <RadzenButton Icon="add_circle_outline" Text="Add" Click="@AddButtonClick" Variant="Radzen.Variant.Filled" />
+            </RadzenStack>
+        </RadzenColumn>
+    </RadzenRow>
+    <RadzenTextBox Placeholder="Search ..." style="display: block; width: 100%" @oninput="@Search" />
+    <RadzenRow>
+      <RadzenColumn SizeMD=12>
+        <RadzenDataGrid @ref="grid0" ColumnWidth="200px"  AllowFiltering="true" FilterMode="FilterMode.Advanced" AllowPaging="true" AllowSorting="true" ShowPagingSummary="true" PageSizeOptions=@(new int[]{5, 10, 20, 30})
+            Data="@roles" LoadData="@Grid0LoadData" Count="@count" TItem="TaskManager.Server.Models.TaskManagerDb.Role" RowSelect="@EditRow">
+            <Columns>
+                <RadzenDataGridColumn TItem="TaskManager.Server.Models.TaskManagerDb.Role" Title="Team">
+                    <Template>
+                        <RadzenText>IT Department</RadzenText>
+                    </Template>
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TaskManager.Server.Models.TaskManagerDb.Role" Property="RoleName" Title="Role Name">
+                </RadzenDataGridColumn>
+                <RadzenDataGridColumn TItem="TaskManager.Server.Models.TaskManagerDb.Role" Filterable="false" Sortable="false" Width="70px" TextAlign="TextAlign.Center">
+                    <Template Context="role">
+                        <RadzenButton ButtonStyle="ButtonStyle.Info" Icon="edit" Size="ButtonSize.Medium"
+                            Shade="Shade.Lighter" Variant="Radzen.Variant.Filled"
+                            Click=@(args => GridDeleteButtonClick(args, role)) @onclick:stopPropagation="true" />
+                        <RadzenButton ButtonStyle="ButtonStyle.Danger" Icon="delete" Size="ButtonSize.Medium"
+                            Shade="Shade.Lighter" Variant="Radzen.Variant.Filled"
+                            Click=@(args => GridDeleteButtonClick(args, role)) @onclick:stopPropagation="true" />
+                            
+                    </Template>
+                </RadzenDataGridColumn>
+            </Columns>
+
+        </RadzenDataGrid>
+
+    </RadzenColumn>
+  </RadzenRow>
+</RadzenStack>

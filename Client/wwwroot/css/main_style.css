@@ -1,0 +1,9 @@
+:root {
+    --mud-drawer-width-left: 280px !important;
+    --theme-blue: #0b3787;
+    --theme-red: #bd5f33;
+}
+
+.header_color{
+    color:#b374fa;
+}

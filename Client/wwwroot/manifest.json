@@ -1,0 +1,15 @@
+{
+  "name": "TaskManager",
+  "short_name": "TaskManager",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fff111",
+  "theme_color": "#b374FA",
+  "icons": [
+    {
+      "src": "icon-512.jpg",
+      "type": "image/jpg",
+      "sizes": "512x512"
+    }
+  ]
+}
